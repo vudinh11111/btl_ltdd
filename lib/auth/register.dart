@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:btl/data/post_data.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -5,6 +8,14 @@ class Register extends StatelessWidget {
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController name = TextEditingController();
+  int generateUniqueUid() {
+    final random = Random();
+    final characters = '123456789';
+    final uniqueId = List.generate(
+        9, (index) => characters[random.nextInt(characters.length)]).join();
+    return int.parse(uniqueId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +32,7 @@ class Register extends StatelessWidget {
                 height: 300,
                 width: 300,
               ),
-              TextFormField(
+              TextField(
                 controller: name,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(),
@@ -29,14 +40,14 @@ class Register extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
-              TextFormField(
+              TextField(
                 controller: email,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(),
                   hintText: "Email",
                 ),
               ),
-              TextFormField(
+              TextField(
                 controller: pass,
                 obscureText: true, // Để ẩn mật khẩu
                 decoration: InputDecoration(
@@ -47,6 +58,21 @@ class Register extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  PostTakeData postdata = PostTakeData();
+                  String namenew = name.text.toString();
+                  String emailnew =
+                      email.text.toString(); // Fix here, use email.text
+                  String passnew =
+                      pass.text.toString(); // Fix here, use pass.text
+
+                  await postdata.post_take_data({
+                    "id": generateUniqueUid(),
+                    "name": namenew,
+                    "email": emailnew,
+                    "pass": passnew,
+                    "avatar": "",
+                    "token": "",
+                  }, "data");
                   Navigator.of(context).pop();
                 },
                 child: Text('Sign Up'),

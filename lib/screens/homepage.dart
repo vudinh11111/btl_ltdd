@@ -119,8 +119,10 @@ class _HomePage extends State<HomePage> {
                       Container(
                           child: CircleAvatar(
                               radius: 40,
-                              backgroundImage:
-                                  NetworkImage(widget.data!.avatar!))),
+                              backgroundImage: widget.data!.avatar != ""
+                                  ? NetworkImage(widget.data!.avatar!)
+                                  : AssetImage("assets/avatar0.jpg")
+                                      as ImageProvider)),
                       Positioned(
                         bottom: 0,
                         right: 0,
