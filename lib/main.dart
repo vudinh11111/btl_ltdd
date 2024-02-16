@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:btl/theme/theme_detail.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -17,8 +18,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  onesignal();
   AwesomeNotifications().initialize(
     null,
     [
@@ -48,16 +49,10 @@ Future<void> main() async {
   ));
 }
 
-String titleNotifier = "";
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: 1,
-      channelKey: 'chat_channel',
-      title: message.data["name"],
-      body: message.data["mess"],
-    ),
-  );
+Future onesignal() async {
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize("09caf43c-7a3d-4d4e-9e00-bf84f533bf7f");
+  OneSignal.Notifications.requestPermission(true).then((value) {});
 }
 
 class MyApp extends StatefulWidget {
@@ -65,6 +60,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
+  String? message;
+
   @override
   void initState() {
     super.initState();

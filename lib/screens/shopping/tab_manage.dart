@@ -24,12 +24,13 @@ class _Shopping_cart extends State<Shopping_cart> {
     super.initState();
   }
 
-  fetch() async {
+  Future fetch() async {
     lichsu = [];
     doi = [];
     danggiao = [];
     await cv.fetchgiohang(widget.data.id!);
     await cv.fetchmua(widget.data.id!);
+
     if (cv.mua.isNotEmpty) {
       for (int i = 0; i < cv.mua.length; i++) {
         if (cv.mua[i].trangthai == 0) {
@@ -72,7 +73,7 @@ class _Shopping_cart extends State<Shopping_cart> {
                                       text: "Giỏ hàng của bạn",
                                     ),
                                     Tab(
-                                      text: "Đợi giao hàng",
+                                      text: "Đợi xác nhận hàng",
                                     ),
                                     Tab(
                                       text: "Đang Giao",
@@ -103,5 +104,13 @@ class _Shopping_cart extends State<Shopping_cart> {
                 );
               }
             }));
+  }
+
+  @override
+  void dispose() {
+    doi = [];
+    lichsu = [];
+    danggiao = [];
+    super.dispose();
   }
 }

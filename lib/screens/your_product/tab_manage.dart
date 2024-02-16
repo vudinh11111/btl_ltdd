@@ -22,7 +22,6 @@ class _Shopping_cart extends State<Shopping_cartY> {
   @override
   void initState() {
     super.initState();
-    //  cv.fetchqlsp(widget.data.id!);
   }
 
   Future fetch() async {
@@ -30,19 +29,19 @@ class _Shopping_cart extends State<Shopping_cartY> {
     doi = [];
     danggiao = [];
     await cv.fetchqlsp(widget.data.id!);
-    await cv.fetchmua(widget.data.id!);
-    if (cv.mua.isNotEmpty) {
-      for (int i = 0; i < cv.mua.length; i++) {
-        if (cv.mua[i].trangthai == 0) {
-          doi.add(cv.mua[i]);
-        } else if (cv.mua[i].trangthai == 1) {
-          danggiao.add(cv.mua[i]);
-        } else if (cv.mua[i].trangthai == 2) {
-          lichsu.add(cv.mua[i]);
+    await cv.fetchgiohang(widget.data.id!);
+    await cv.fetchban(widget.data.id!);
+    if (cv.ban.isNotEmpty) {
+      for (int i = 0; i < cv.ban.length; i++) {
+        if (cv.ban[i].trangthai == 0) {
+          doi.add(cv.ban[i]);
+        } else if (cv.ban[i].trangthai == 1) {
+          danggiao.add(cv.ban[i]);
+        } else if (cv.ban[i].trangthai == 2) {
+          lichsu.add(cv.ban[i]);
         }
       }
     }
-    await cv.fetchgiohang(widget.data.id!);
   }
 
   @override
@@ -82,7 +81,7 @@ class _Shopping_cart extends State<Shopping_cartY> {
                                       text: "Quản lí Sản Phẩm",
                                     ),
                                     Tab(
-                                      text: "Lịch Sử Mua Hàng",
+                                      text: "Lịch Sử Bán Hàng",
                                     ),
                                   ],
                                 ),

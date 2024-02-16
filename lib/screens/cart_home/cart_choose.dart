@@ -171,7 +171,7 @@ class _CartChooseState extends State<CartChoose> {
                                 ],
                               );
                             });
-
+                        DateTime dtime = DateTime.now();
                         PostTakeData postTake = PostTakeData();
                         await postTake.post_take_data({
                           "product_id": widget.product.product_id,
@@ -180,6 +180,7 @@ class _CartChooseState extends State<CartChoose> {
                           "chooseSize": selectedSize,
                           "chooseColor": "",
                           "chooseImage": selectedImage,
+                          "ngaymua": "${dtime}",
                         }, "giohang");
                       },
                     ),

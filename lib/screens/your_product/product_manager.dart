@@ -1,4 +1,7 @@
 import 'package:btl/data/data.dart';
+//import 'package:btl/data/delete.dart';
+//import 'package:btl/google_drive/ggdriver.dart';
+
 import 'package:btl/screens/cart_home/home_cart.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,10 @@ class Product_manager extends StatefulWidget {
 }
 
 class _Product_manager extends State<Product_manager> {
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -18,29 +25,49 @@ class _Product_manager extends State<Product_manager> {
         scrollDirection: Axis.vertical,
         itemCount: widget.quanlisanpham.length,
         itemBuilder: (context, index) {
-          return Card(
-            child: Container(
-              child: Column(
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                // isSelected[index] = !isSelected[index];
+
+                //  SelectedItems();
+              });
+            },
+            child: Card(
+              child: Container(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 20,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
                                   builder: (context) => CartHome(
-                                      widget.quanlisanpham[index],
-                                      widget.data)));
-                        },
-                        leading: Image.network(
-                            fit: BoxFit.fill,
-                            '${widget.quanlisanpham[index].image![0]}'),
-                        title: Text("${widget.quanlisanpham[index].tien}"),
-                      ),
-                      onTap: () {},
+                                    widget.quanlisanpham[index],
+                                    widget.data,
+                                  ),
+                                ),
+                              );
+                            },
+                            leading: Image.network(
+                              fit: BoxFit.fill,
+                              '${widget.quanlisanpham[index].image![0]}',
+                            ),
+                            title: Text("${widget.quanlisanpham[index].name}"),
+                            subtitle: Text(
+                                "id:${widget.quanlisanpham[index].product_id}"),
+                          ),
+                        ),
+                      ],
                     ),
-                  ]),
+                  ],
+                ),
+              ),
             ),
           );
         },
@@ -54,10 +81,31 @@ class _Product_manager extends State<Product_manager> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Tổng:400.000vnđ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                Expanded(
+                  child: Text(
+                    "Bạn treo bán ${widget.quanlisanpham.length} sản phẩm",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
+                // Expanded(
+                //   child: ElevatedButton(
+                //      onPressed: () async {
+                // Delete delete = Delete();
+                // GoogleApiDr googleApiDr = GoogleApiDr();
+                //for (int i = 0; i < selectedItems.length; i++) {
+                //  await delete.deleteData(
+                //     "${selectedItems[i].product_id}", "sanpham");
+
+                // await googleApiDr.DeleteFilesByName(
+                //    selectedItems[i].name!);
+                // }
+                // },
+                //child: Text(
+                // "Xóa",
+                //  style: TextStyle(color: Colors.amber),
+                //)
+                //)
+                // ),
               ],
             ),
           ))

@@ -1,4 +1,5 @@
 class Data {
+  int? sodienthoai;
   String? name;
   String? id;
   String? email;
@@ -7,7 +8,13 @@ class Data {
   String? token;
 
   Data(
-      {this.name, this.id, this.email, this.password, this.avatar, this.token});
+      {this.sodienthoai,
+      this.name,
+      this.id,
+      this.email,
+      this.password,
+      this.avatar,
+      this.token});
 
   String getName() {
     return this.name!;
@@ -80,6 +87,7 @@ class Product {
 }
 
 class GioHang {
+  String? ngaymua;
   String? chooseSize;
   String? chooseColor;
   String? chooseImage;
@@ -98,7 +106,8 @@ class GioHang {
   String? luotthich;
   String? email_tt;
   GioHang(
-      {this.chooseSize,
+      {this.ngaymua,
+      this.chooseSize,
       this.chooseColor,
       this.chooseImage,
       this.soluong,
@@ -118,6 +127,8 @@ class GioHang {
 }
 
 class Mua {
+  String? nameid;
+  int? sodienthoai;
   String? ngaymua;
   String? chooseSize;
   String? chooseColor;
@@ -141,7 +152,9 @@ class Mua {
   String? nguoigiao;
   String? email_tt;
   Mua(
-      {this.ngaymua,
+      {this.nameid,
+      this.sodienthoai,
+      this.ngaymua,
       this.chooseSize,
       this.chooseColor,
       this.chooseImage,
@@ -163,4 +176,24 @@ class Mua {
       this.ngaygiao,
       this.nguoigiao,
       this.email_tt});
+}
+
+class BinhLuan {
+  String? product_id;
+  String? name;
+  String? avatar;
+  String? time;
+  String? mess;
+  BinhLuan({this.product_id, this.name, this.avatar, this.time, this.mess});
+}
+
+class Notifier {
+  String? notifier;
+  Notifier({this.notifier});
+}
+
+class Thich {
+  String? product_id;
+  String? id;
+  Thich({this.product_id, this.id});
 }

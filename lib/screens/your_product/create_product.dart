@@ -260,10 +260,9 @@ class _CreateProduct extends State<CreateProduct> {
                     "tien": tien.text,
                     "name": ten.text,
                     "mieuta": mieuta.text,
-                    "luotmua": "0",
-                    "luotthich": "0",
                     "email_tt": email_pay.text
                   }, "sanpham");
+
                   Navigator.pop(context);
                 },
               ),

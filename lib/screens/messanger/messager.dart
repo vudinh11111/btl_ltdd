@@ -65,8 +65,10 @@ class _Messanger extends State<Messanger> {
                                   : Colors.white),
                         ),
                         leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(id_other[index].avatar!),
+                          backgroundImage: id_other[index].avatar != ""
+                              ? NetworkImage("${id_other[index].avatar}")
+                              : AssetImage("assets/avatar0.jpg")
+                                  as ImageProvider,
                         ))));
           }),
     );

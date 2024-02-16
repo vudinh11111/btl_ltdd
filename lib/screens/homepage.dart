@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:btl/auth/shared_preferences.dart';
 import 'package:btl/changenotifer/changenotifier.dart';
 import 'package:btl/data/convert_data.dart';
@@ -16,6 +17,7 @@ import 'package:btl/screens/alert.dart';
 import 'setting.dart';
 
 import 'package:btl/screens/change_image/change_image.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -39,6 +41,40 @@ class _HomePage extends State<HomePage> {
 
   final _scaffold = GlobalKey<ScaffoldState>();
   PageController _pageController = PageController(initialPage: 0);
+  late IO.Socket socketUser;
+  void connectToSockets() {
+    socketUser = IO.io(
+      'https://sherlockhome.io.vn',
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .disableAutoConnect()
+          .build(),
+    );
+
+    socketUser.connect();
+    socketUser.on('messager', (data) {
+      if (this.mounted)
+        setState(() {
+          showNotification(data["mess"], data["id_receiver"], data["name"],
+              data["id_sender"]);
+        });
+    });
+  }
+
+  Future showNotification(dynamic message, dynamic idReceiver, dynamic name,
+      dynamic idSender) async {
+    if (idReceiver == widget.data!.id) {
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: 'chat_channel',
+          title: '${name}',
+          body: message,
+        ),
+      );
+    }
+  }
+
   void Sign_Out() async {
     Get.offAndToNamed("/login");
     final share_auth = await SharedPreferences.getInstance();
@@ -67,13 +103,14 @@ class _HomePage extends State<HomePage> {
     _scaffold.currentState!.openDrawer();
   }
 
-/*
   @override
   void initState() {
     super.initState();
-    fetch();
+    connectToSockets();
+    cv.fetchnotifier();
   }
 
+/*
   Future fetch() async {
     await cv.fetchduct();
   }
@@ -270,7 +307,7 @@ class _HomePage extends State<HomePage> {
                         }))),
             IconButton(
               onPressed: () {
-                Alert.showMenuNotifications(context);
+                Alert.showMenuNotifications(context, cv.notifier);
               },
               icon: Stack(children: [
                 Icon(Icons.add_alert),
@@ -340,5 +377,10 @@ class _HomePage extends State<HomePage> {
             )
           ],
         ));
+  }
+
+  void dispose() {
+    super.dispose();
+    socketUser.disconnect();
   }
 }

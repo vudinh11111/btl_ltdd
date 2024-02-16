@@ -26,15 +26,22 @@ class _Loading_sp extends State<Loading_sp> {
                       child: ListTile(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CartHome(
-                                      widget.mua[index], widget.data)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartHome(
+                                widget.mua[index],
+                                widget.data,
+                              ),
+                            ),
+                          );
                         },
                         leading: Image.network(
-                            fit: BoxFit.fill,
-                            '${widget.mua[index].chooseImage}'),
-                        title: Text("${widget.mua[index].tien}"),
+                          fit: BoxFit.fill,
+                          '${widget.mua[index].chooseImage}',
+                        ),
+                        title: Text("${widget.mua[index].name}"),
+                        subtitle:
+                            Text("Số lượng: ${widget.mua[index].soluong}"),
                       ),
                       onTap: () {},
                     ),

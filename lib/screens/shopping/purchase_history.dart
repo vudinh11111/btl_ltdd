@@ -24,17 +24,33 @@ class _You_cart extends State<Purchase_history> {
                   children: [
                     GestureDetector(
                       child: ListTile(
+                        trailing: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  "số điện thoại:${widget.mua[index].sodienthoai}"),
+                              Text("địa chỉ:${widget.mua[index].diachi}"),
+                              Text(
+                                  "tên người nhận:${widget.mua[index].nameid}"),
+                            ]),
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CartHome(
-                                      widget.mua[index], widget.data)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartHome(
+                                widget.mua[index],
+                                widget.data,
+                              ),
+                            ),
+                          );
                         },
                         leading: Image.network(
-                            fit: BoxFit.fill,
-                            '${widget.mua[index].chooseImage}'),
-                        title: Text("${widget.mua[index].tien}"),
+                          fit: BoxFit.fill,
+                          '${widget.mua[index].chooseImage}',
+                        ),
+                        title: Text("${widget.mua[index].name}"),
+                        subtitle:
+                            Text("Số lượng: ${widget.mua[index].soluong}"),
                       ),
                       onTap: () {},
                     ),
@@ -43,22 +59,6 @@ class _You_cart extends State<Purchase_history> {
           );
         },
       ),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            decoration:
-                BoxDecoration(color: Theme.of(context).colorScheme.primary),
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Tổng:400.000vnđ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ],
-            ),
-          ))
     ]);
   }
 }

@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "796228234054",
-    "firebase_url": "https://testytb-ac550-default-rtdb.firebaseio.com",
-    "project_id": "testytb-ac550",
-    "storage_bucket": "testytb-ac550.appspot.com"
+    "project_number": "564893514155",
+    "project_id": "shopmb-33a2f",
+    "storage_bucket": "shopmb-33a2f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:796228234054:android:31e4444a10de69c95a1347",
+        "mobilesdk_app_id": "1:564893514155:android:1a6111c6b39c29e7723aee",
         "android_client_info": {
           "package_name": "com.example.btl"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCCW2wHfN4Q3VE6HgDEv-kw1uEWtf3goK0"
+          "current_key": "AIzaSyAY3z0nLKD8ombXNNXJJzX19ILSb0GBf1c"
         }
       ],
       "services": {

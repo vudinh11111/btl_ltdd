@@ -30,19 +30,22 @@ class _MyHomePageState extends State<Paypal> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             TextButton(
                 onPressed: () async {
+                  DateTime dta = DateTime.now();
                   PostTakeData postTake = PostTakeData();
 
                   for (int i = 0; i < widget.giohangsangmua.length; i++) {
                     await postTake.post_take_data({
+                      "soluong": widget.giohangsangmua[i].soluong,
                       "product_id": widget.giohangsangmua[i].product_id,
                       "nguoimua": widget.data.id,
-                      "soluong": widget.giohangsangmua[i].soluong,
                       "diachi": widget.diachi,
                       "trangthai": 0,
                       "nguoigiao": "",
                       "ngaygiao": "",
+                      "ngaymua": "${dta}",
                     }, "mua");
                   }
+                  print("onSuccess");
                 },
                 child: Container(
                     margin: EdgeInsets.only(right: 10, left: 10),
@@ -87,14 +90,11 @@ class _MyHomePageState extends State<Paypal> {
                               "product_id": widget.giohangsangmua[i].product_id,
                               "nguoimua": widget.data.id,
                               "diachi": widget.diachi,
-                              "trangthai": 1,
+                              "trangthai": 0,
                               "nguoigiao": "",
                               "ngaygiao": "",
                               "ngaymua": "${dta}",
                             }, "mua");
-
-                            print(widget.giohangsangmua[i].soluong);
-                            print(widget.giohangsangmua[i].product_id);
                           }
                           print("onSuccess");
                         },

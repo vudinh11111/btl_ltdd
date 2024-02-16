@@ -1,5 +1,7 @@
 import 'package:btl/data/data.dart';
+import 'package:btl/data/delete.dart';
 import 'package:btl/paypal/paypal_screens.dart';
+
 import 'package:btl/screens/cart_home/home_cart.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +19,14 @@ class _Shopping extends State<Shopping> {
   int tientong = 0;
   late List<bool> isSelected;
   List<GioHang> selectedItems = [];
+
   @override
   void initState() {
     super.initState();
     isSelected = List.generate(widget.giohang.length, (index) => false);
   }
 
-  void printSelectedItems() {
+  void SelectedItems() {
     List<GioHang> selectedItem = [];
     for (int i = 0; i < widget.giohang.length; i++) {
       if (isSelected[i]) {
@@ -60,7 +63,7 @@ class _Shopping extends State<Shopping> {
                 setState(() {
                   isSelected[index] = !isSelected[index];
                   updateTotalAmount();
-                  printSelectedItems();
+                  SelectedItems();
                 });
               },
               child: Card(
@@ -87,25 +90,76 @@ class _Shopping extends State<Shopping> {
                           ),
                           Expanded(
                             flex: 20,
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CartHome(
-                                      widget.giohang[index],
-                                      widget.data,
+                            child: GestureDetector(
+                              child: ListTile(
+                                trailing: IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              "Bạn chắc chắn muốn xóa sản phẩm khỏi giỏ hàng chứ?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("Hủy"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    );
+                                                  },
+                                                );
+
+                                                final _delete = Delete();
+                                                await _delete.deleteData(
+                                                  "${widget.giohang[index].ngaymua}",
+                                                  "giohang",
+                                                );
+                                                setState(() {
+                                                  widget.giohang
+                                                      .removeAt(index);
+                                                });
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text("Đồng ý"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CartHome(
+                                        widget.giohang[index],
+                                        widget.data,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              leading: Image.network(
-                                fit: BoxFit.fill,
-                                '${widget.giohang[index].chooseImage}',
+                                  );
+                                },
+                                leading: Image.network(
+                                  '${widget.giohang[index].chooseImage}',
+                                  fit: BoxFit.fill,
+                                ),
+                                title: Text("${widget.giohang[index].name}"),
+                                subtitle: Text(
+                                    "Số lượng: ${widget.giohang[index].soluong}"),
                               ),
-                              title: Text("${widget.giohang[index].name}"),
-                              subtitle: Text(
-                                  "Số lượng: ${widget.giohang[index].soluong}"),
                             ),
                           ),
                         ],
@@ -132,6 +186,7 @@ class _Shopping extends State<Shopping> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    print(selectedItems);
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {

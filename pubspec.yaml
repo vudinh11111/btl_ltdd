@@ -59,6 +59,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   webview_flutter: ^4.5.0
   http_auth: ^1.0.4
+  firebase_analytics: ^10.8.0
+  onesignal_flutter: ^5.1.0
 
 
 dev_dependencies:

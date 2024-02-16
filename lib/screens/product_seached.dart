@@ -72,7 +72,11 @@ class _ProductSearchedState extends State<Product_Searched> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("${sortproduct[index].tien}")
+                  Text(
+                    "${sortproduct[index].name}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  )
                 ],
               ),
             ),

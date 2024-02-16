@@ -1,11 +1,10 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:btl/data/data.dart';
 import 'package:btl/data/post_data.dart';
-
 import 'package:flutter/material.dart';
 import 'package:btl/data/convert_data.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 // ignore: must_be_immutable
 class Chat_Messanger extends StatefulWidget {
@@ -25,20 +24,13 @@ class _Messanger extends State<Chat_Messanger> {
   @override
   void initState() {
     super.initState();
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage? remoteMessage) {
-      if (this.mounted)
-        setState(() {
-          message = remoteMessage!.data["mess"];
-        });
-    });
     connectToSockets();
     fetch();
   }
 
   void connectToSockets() {
     socketUser = IO.io(
-      'https://sherlockhome.io.vn/',
+      'https://sherlockhome.io.vn',
       IO.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
@@ -46,34 +38,9 @@ class _Messanger extends State<Chat_Messanger> {
     );
 
     socketUser.connect();
-    socketUser.on('messager', (data) {
-      setState(() {
-        if (data["id_sender"] == widget.dataa.id &&
-            data["id_receiver"] == widget.dataother.id) {
-          mymess.add(messages.length);
-        } else if (data["id_receiver"] == widget.dataa.id &&
-            data["id_sender"] == widget.dataother.id) {
-          messages.add(data["mess"]);
-        }
-        showNotification(data["mess"], data["id_receiver"]);
-      });
-    });
   }
 
-  void showNotification(String message, String idReceiver) {
-    if (idReceiver == widget.dataa.id) {
-      AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: 'chat_channel',
-          title: '${widget.dataother.name}',
-          body: message,
-        ),
-      );
-    }
-  }
-
-  Future<void> sendMessageUser() async {
+  void sendMessageUser() async {
     String message = textEditingController.text;
     if (message.isNotEmpty) {
       setState(() {
@@ -84,10 +51,11 @@ class _Messanger extends State<Chat_Messanger> {
         "id_sender": "${widget.dataa.id}",
         "id_receiver": "${widget.dataother.id}",
         "mess": message,
+        "name": "${widget.dataa.name}"
       });
       DateTime now = DateTime.now();
       PostTakeData _postTakeData = PostTakeData();
-      _postTakeData.post_take_data({
+      await _postTakeData.post_take_data({
         "id_sender": widget.dataa.id,
         "id_receiver": widget.dataother.id,
         "mess": message,
@@ -95,6 +63,7 @@ class _Messanger extends State<Chat_Messanger> {
         "times": "${now}",
         "name": widget.dataother.name
       }, "message");
+      firebaseNotifier(widget.dataother.token!, widget.dataa.name!, message);
       textEditingController.clear();
     }
   }
@@ -120,11 +89,48 @@ class _Messanger extends State<Chat_Messanger> {
     }
   }
 
+  Future<void> firebaseNotifier(
+      String token, String name, String tinnhan) async {
+    Map<String, dynamic> data = {
+      "to": token,
+      "collapse_key": "notification_group",
+      "notification": {"body": tinnhan, "title": name, "subtitle": ""}
+    };
+
+    const url = 'https://fcm.googleapis.com/fcm/send';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'content-type': 'application/json; charset=UTF-8',
+        "Authorization":
+            'key=AAAAg4ZG-as:APA91bFvcNHBoq2VlTIBXnIUFo-Zvih5Y_Ld5HLla02610Iay1u1-WLiWz_u1rT5aaqkvmMYf9QI3qmO25IFKoNZsx3Q2rxtkxXeqwBxKgLrl7OIqRmiE3G96Jvcd7oy1AUL_YqWOxqB'
+      },
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      print('Notification sent successfully');
+    } else {
+      throw Exception('Failed to send notification');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Messenger'),
+        // automaticallyImplyLeading: false,
+        title: Container(
+            child: Row(children: [
+          CircleAvatar(
+              backgroundImage: widget.dataother.avatar != ""
+                  ? NetworkImage("${widget.dataother.avatar}")
+                  : AssetImage("assets/avatar0.jpg") as ImageProvider),
+          SizedBox(
+            width: 10,
+          ),
+          Text('${widget.dataother.name!}')
+        ])),
       ),
       body: Column(
         children: [
