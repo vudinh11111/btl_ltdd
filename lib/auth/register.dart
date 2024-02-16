@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Register extends StatelessWidget {
+  TextEditingController sodienthoai = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -41,6 +42,14 @@ class Register extends StatelessWidget {
                 ),
               ),
               TextField(
+                controller: sodienthoai,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(),
+                  hintText: "so dien thoai",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              TextField(
                 controller: email,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(),
@@ -64,12 +73,15 @@ class Register extends StatelessWidget {
                       email.text.toString(); // Fix here, use email.text
                   String passnew =
                       pass.text.toString(); // Fix here, use pass.text
+                  String sodienthoainew =
+                      sodienthoai.text.toString(); // Fix here, use pass.text
 
                   await postdata.post_take_data({
                     "id": generateUniqueUid(),
                     "name": namenew,
                     "email": emailnew,
                     "pass": passnew,
+                    "sodienthoai": sodienthoainew,
                     "avatar": "",
                     "token": "",
                   }, "data");
