@@ -6,6 +6,7 @@ import 'package:btl/data/post_data.dart';
 import 'package:btl/google_drive/ggdriver.dart';
 import 'package:btl/screens/cart_home/head_tab/head_tab_create.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
@@ -264,6 +265,7 @@ class _CreateProduct extends State<CreateProduct> {
                   }, "sanpham");
 
                   Navigator.pop(context);
+                  Get.toNamed('/homepage');
                 },
               ),
             )
