@@ -47,7 +47,8 @@ class _MyHomePageState extends State<Paypal> {
                     }, "mua");
                   }
                   print("onSuccess");
-                  Get.toNamed('/homepage');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: Container(
                     margin: EdgeInsets.only(right: 10, left: 10),
@@ -99,7 +100,8 @@ class _MyHomePageState extends State<Paypal> {
                             }, "mua");
                           }
                           print("onSuccess");
-                          Get.toNamed('/homepage');
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         onError: (error) {
                           print("onError: $error");
