@@ -77,7 +77,7 @@ class Register extends StatelessWidget {
                       sodienthoai.text.toString(); // Fix here, use pass.text
 
                   await postdata.post_take_data({
-                    "id": generateUniqueUid(),
+                    "id": "${generateUniqueUid()}",
                     "name": namenew,
                     "email": emailnew,
                     "pass": passnew,

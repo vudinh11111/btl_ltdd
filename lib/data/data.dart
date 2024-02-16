@@ -1,5 +1,5 @@
 class Data {
-  int? sodienthoai;
+  String? sodienthoai;
   String? name;
   String? id;
   String? email;
@@ -128,7 +128,7 @@ class GioHang {
 
 class Mua {
   String? nameid;
-  int? sodienthoai;
+  String? sodienthoai;
   String? ngaymua;
   String? chooseSize;
   String? chooseColor;
