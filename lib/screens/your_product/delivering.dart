@@ -1,4 +1,5 @@
 import 'package:btl/data/data.dart';
+
 import 'package:btl/data/update.dart';
 import 'package:btl/screens/cart_home/home_cart.dart';
 import 'package:flutter/material.dart';
@@ -138,6 +139,7 @@ class _Delivering extends State<Delivering> {
                 GestureDetector(
                     onTap: () {
                       Update update = Update();
+
                       for (int i = 0; i < selectedItems.length; i++) {
                         update.UpdateData({"trangthai": 2},
                             "change_trangthai/${selectedItems[i].ngaymua}");
@@ -151,6 +153,7 @@ class _Delivering extends State<Delivering> {
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
+                                      setState(() {});
                                     },
                                     child: Text("Đóng"))
                               ],

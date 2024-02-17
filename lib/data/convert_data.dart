@@ -245,7 +245,7 @@ class ConvertData {
           soluong: convert[i]["soluong"] ?? 0,
           nguoimua: convert[i]["nguoimua"] ?? "",
           nguoiban: convert[i]["nguoiban"] ?? "",
-          id: convert[i]["product_id"] ?? "",
+          product_id: convert[i]["product_id"] ?? "",
           tien: convert[i]["tien"] ?? "",
           name: convert[i]["name"] ?? "",
           size: convert[i]["sizes"] ?? "",

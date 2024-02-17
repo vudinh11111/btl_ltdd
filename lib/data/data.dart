@@ -136,7 +136,7 @@ class Mua {
   int? soluong;
   String? nguoimua;
   String? nguoiban;
-  String? id;
+  String? product_id;
   String? tien;
   String? name;
   String? type;
@@ -161,7 +161,7 @@ class Mua {
       this.soluong,
       this.nguoimua,
       this.nguoiban,
-      this.id,
+      this.product_id,
       this.tien,
       this.name,
       this.type,

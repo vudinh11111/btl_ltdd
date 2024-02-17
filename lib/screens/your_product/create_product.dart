@@ -265,6 +265,7 @@ class _CreateProduct extends State<CreateProduct> {
                   }, "sanpham");
 
                   Navigator.pop(context);
+                  setState(() {});
                 },
               ),
             )

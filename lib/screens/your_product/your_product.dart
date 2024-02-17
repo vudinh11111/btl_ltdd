@@ -151,6 +151,7 @@ class _Your_Product extends State<Your_Product> {
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
+                                      setState(() {});
                                     },
                                     child: Text("Đóng"))
                               ],

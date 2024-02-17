@@ -2,7 +2,6 @@ import 'package:btl/data/data.dart';
 import 'package:btl/data/post_data.dart';
 import 'package:btl/paypal/flutter_paypal.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class Paypal extends StatefulWidget {
@@ -98,10 +97,17 @@ class _MyHomePageState extends State<Paypal> {
                               "ngaygiao": "",
                               "ngaymua": "${dta}",
                             }, "mua");
+
+                            await postTake.post_take_data({
+                              "product_id": widget.giohangsangmua[i].product_id,
+                              "nguoiban": widget.giohangsangmua[i].nguoiban,
+                              "tien": widget.giohangsangmua[i].tien,
+                              "soluong": widget.giohangsangmua[i].soluong,
+                              "ngaymua": "${dta}",
+                            }, "/phaitra");
                           }
+
                           print("onSuccess");
-                          Navigator.pop(context);
-                          Navigator.pop(context);
                         },
                         onError: (error) {
                           print("onError: $error");
